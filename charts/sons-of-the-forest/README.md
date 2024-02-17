@@ -1,5 +1,7 @@
 # Sons of the Forest Helm Chart
 
+[![GitHub Release](https://img.shields.io/github/v/release/caleb-devops/helm-charts?filter=sons-of-the-forest*)](https://github.com/caleb-devops/helm-charts/releases)
+
 This chart installs [docker-sons-of-the-forest-dedicated-server](https://github.com/jammsen/docker-sons-of-the-forest-dedicated-server) on a [Kubernetes](http://kubernetes.io/) cluster using the [Helm](https://helm.sh/) package manager.
 
 ## Usage

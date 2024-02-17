@@ -1,5 +1,7 @@
 # Palworld Helm Chart
 
+[![GitHub Release](https://img.shields.io/github/v/release/caleb-devops/helm-charts?filter=palworld*)](https://github.com/caleb-devops/helm-charts/releases)
+
 This chart installs [docker-palworld-dedicated-server](https://github.com/jammsen/docker-palworld-dedicated-server) on a [Kubernetes](http://kubernetes.io/) cluster using the [Helm](https://helm.sh/) package manager.
 
 ## Usage

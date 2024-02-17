@@ -3,7 +3,7 @@
 This repository contains Helm charts for the following dedicated servers:
 
 - [Palworld](./charts/palworld/)
-- [Sons of the Forest](.charts/sons-of-the-forest)
+- [Sons of the Forest](./charts/sons-of-the-forest)
 
 See the respective links for documentation related to that chart.
 

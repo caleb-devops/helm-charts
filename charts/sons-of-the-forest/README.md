@@ -22,19 +22,19 @@ caleb-devops` to see the charts.
 To install the  chart:
 
 ```sh
-helm install palworld caleb-devops/palworld
+helm install sons-of-the-forest caleb-devops/sons-of-the-forest
 ```
 
-To upgrade the palworld chart:
+To upgrade the sons-of-the-forest chart:
 
 ```sh
-helm upgrade palworld caleb-devops/palworld
+helm upgrade sons-of-the-forest caleb-devops/sons-of-the-forest
 ```
 
 To uninstall the chart:
 
 ```sh
-helm uninstall palworld
+helm uninstall sons-of-the-forest
 ```
 
 ## Configuration

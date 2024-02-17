@@ -17,6 +17,19 @@ entries:
   sons-of-the-forest:
   - apiVersion: v2
     appVersion: latest
+    created: "2024-02-17T23:15:10.611265839Z"
+    description: Sons of the Forest Helm chart for Kubernetes
+    digest: bac895f749682058893dc478b52aa8d33bebc100a6e094f3947b561d9e42286d
+    home: https://github.com/caleb-devops/helm-charts
+    name: sons-of-the-forest
+    sources:
+    - https://github.com/caleb-devops/helm-charts
+    - https://github.com/jammsen/docker-sons-of-the-forest-dedicated-server
+    urls:
+    - https://github.com/caleb-devops/helm-charts/releases/download/sons-of-the-forest-0.1.2/sons-of-the-forest-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: latest
     created: "2024-02-17T21:34:24.911823481Z"
     description: Sons of the Forest Helm chart for Kubernetes
     digest: dd99940f0a856c5dd50aafbd8d4c514ce5e7b6f70e6b7c3e1075331ce2ee7692
@@ -28,4 +41,4 @@ entries:
     urls:
     - https://github.com/caleb-devops/helm-charts/releases/download/sons-of-the-forest-0.1.1/sons-of-the-forest-0.1.1.tgz
     version: 0.1.1
-generated: "2024-02-17T21:34:24.91182802Z"
+generated: "2024-02-17T23:15:10.611277621Z"

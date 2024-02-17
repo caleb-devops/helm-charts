@@ -1,4 +1,4 @@
-# Helm Charts
+# Dedicated Server Helm Charts
 
 This repository contains Helm charts for the following dedicated servers:
 

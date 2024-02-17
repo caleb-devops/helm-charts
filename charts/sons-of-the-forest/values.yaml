@@ -1,0 +1,109 @@
+image:
+  repository: jammsen/sons-of-the-forest-dedicated-server
+  pullPolicy: Always
+  tag: latest
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: LoadBalancer
+  ## Example annotations for kube-vip or MetalLB to assign a specific IP to the LoadBalancer
+  annotations: {}
+    # kube-vip.io/loadbalancerIPs: 192.168.1.100
+    # metallb.universe.tf/loadBalancerIPs: 192.168.1.100
+  gamePort: 8766
+  # gameNodePort: ""
+  queryPort: 27016
+  # queryNodePort: ""
+  blobSyncPort: 9700
+  # blobSyncNodePort: ""
+
+resources:
+  # limits:
+  #   cpu: 4
+  #   memory: 32Gi
+  requests:
+    cpu: 2
+    memory: 4Gi
+
+## Enable persistence using Persistent Volume Claims
+## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+persistence:
+  enabled: true
+
+  ## A manually managed Persistent Volume and Claim
+  ## Requires persistence.enabled: true
+  ## If defined, PVC must be created manually before volume will be bound
+  existingClaim: ""
+
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  ## Storage class of PV to bind. By default it looks for standard storage class.
+  ## If the PV uses a different storage class, specify that here.
+  # storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 20Gi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+## Environment variables to add to the deployment
+env:
+  ALWAYS_UPDATE_ON_START: 1
+
+## Sons of the Forest configuration file
+## ref: https://steamcommunity.com/sharedfiles/filedetails/?id=2992700419#6333102
+##
+serverConfig:
+  IpAddress: "0.0.0.0"
+  GamePort: 8766
+  QueryPort: 27016
+  BlobSyncPort: 9700
+  ServerName: "Sons of the Forest Server (dedicated)"
+  MaxPlayers: 8
+  Password: ""
+  LanOnly: false
+  SaveSlot: 1
+  SaveMode: "Continue"
+  GameMode: "Normal"
+  SaveInterval: 600
+  IdleDayCycleSpeed: 0.0
+  IdleTargetFramerate: 5
+  ActiveTargetFramerate: 60
+  LogFilesEnabled: false
+  TimestampLogFilenames: true
+  TimestampLogEntries: true
+  GameSettings: {}
+  CustomGameModeSettings: {}
+
+## Sons of the Forest server ownership file
+## ref: https://steamcommunity.com/sharedfiles/filedetails/?id=2992700419#6333092
+##
+ownersWhitelist: |
+  # In order to be able to administrate your server from in game directly, you will need to setup server ownership.
+  # Add below the steam ids of every server owner, one steam id per line.
+  # To find your SteamID, open Steam and click on your name on the top right, then go to Account Details.

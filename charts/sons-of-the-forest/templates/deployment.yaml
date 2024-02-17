@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sons-of-the-forest.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "sons-of-the-forest.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "sons-of-the-forest.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "sons-of-the-forest.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: sons-of-the-forest
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          ports:
+            - name: game
+              containerPort: {{ .Values.serverConfig.GamePort }}
+              protocol: UDP
+            - name: query
+              containerPort: {{ .Values.serverConfig.QueryPort }}
+              protocol: UDP
+            - name: blobsync
+              containerPort: {{ .Values.serverConfig.BlobSyncPort }}
+              protocol: UDP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: sons-of-the-forest
+              mountPath: /sonsoftheforest
+              subPath: game
+            - name: sons-of-the-forest
+              mountPath: /steamcmd
+              subPath: steamcmd
+            - name: sons-of-the-forest
+              mountPath: /winedata
+              subPath: winedata
+            - name: config-volume
+              mountPath: /sonsoftheforest/userdata/dedicatedserver.cfg
+              subPath: dedicatedserver.cfg
+            - name: config-volume
+              mountPath: /sonsoftheforest/userdata/ownerswhitelist.txt
+              subPath: ownerswhitelist.txt
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: sons-of-the-forest
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ default (include "sons-of-the-forest.fullname" .) .Values.persistence.existingClaim }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
+        - name: config-volume
+          configMap:
+            name: {{ include "sons-of-the-forest.fullname" . }}

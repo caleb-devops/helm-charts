@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sons-of-the-forest.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "sons-of-the-forest.labels" . | nindent 4 }}
+data:
+  dedicatedserver.cfg: |
+    {{- .Values.serverConfig | toPrettyJson | nindent 4 }}
+  ownerswhitelist.txt: |
+    {{- .Values.ownersWhitelist | nindent 4 }}

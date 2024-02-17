@@ -1,0 +1,31 @@
+apiVersion: v1
+entries:
+  palworld:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-02-17T21:34:24.756816815Z"
+    description: Palworld Helm chart for Kubernetes
+    digest: fbf79a3db18dd8435fb2970ef96e9d466d88a1357e9c2d1e140b4eb095cf8c70
+    home: https://github.com/caleb-devops/helm-charts
+    name: palworld
+    sources:
+    - https://github.com/caleb-devops/helm-charts
+    - https://github.com/jammsen/docker-palworld-dedicated-server
+    urls:
+    - https://github.com/caleb-devops/helm-charts/releases/download/palworld-0.2.1/palworld-0.2.1.tgz
+    version: 0.2.1
+  sons-of-the-forest:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-02-17T21:34:24.911823481Z"
+    description: Sons of the Forest Helm chart for Kubernetes
+    digest: dd99940f0a856c5dd50aafbd8d4c514ce5e7b6f70e6b7c3e1075331ce2ee7692
+    home: https://github.com/caleb-devops/helm-charts
+    name: sons-of-the-forest
+    sources:
+    - https://github.com/caleb-devops/helm-charts
+    - https://github.com/jammsen/docker-sons-of-the-forest-dedicated-server
+    urls:
+    - https://github.com/caleb-devops/helm-charts/releases/download/sons-of-the-forest-0.1.1/sons-of-the-forest-0.1.1.tgz
+    version: 0.1.1
+generated: "2024-02-17T21:34:24.91182802Z"

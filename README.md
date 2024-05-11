@@ -4,6 +4,7 @@ This repository contains Helm charts for the following dedicated servers:
 
 - [Palworld](./charts/palworld/)
 - [Sons of the Forest](./charts/sons-of-the-forest)
+- [V Rising](./charts/vrising)
 
 See the respective links for documentation related to that chart.
 

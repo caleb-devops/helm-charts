@@ -99,7 +99,7 @@ serverHostSettings:
     Password: ''
 ```
 
-Additional game settings settings can be applied under the `serverGameSettings` key. See <https://cdn.stunlock.com/blog/2022/05/25083113/Game-Server-Settings.pdf> for reference.
+Additional game settings can be applied under the `serverGameSettings` key. See <https://cdn.stunlock.com/blog/2022/05/25083113/Game-Server-Settings.pdf> for reference.
 
 > [!TIP]
 > Settings are converted to json and saved directly to the `ServerHostSettings.json` and `ServerGameSettings.json` files. Additional settings that are not found in this Chart can still be applied using their respective keys.

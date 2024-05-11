@@ -41,4 +41,18 @@ entries:
     urls:
     - https://github.com/caleb-devops/helm-charts/releases/download/sons-of-the-forest-0.1.1/sons-of-the-forest-0.1.1.tgz
     version: 0.1.1
-generated: "2024-02-17T23:15:10.611277621Z"
+  vrising:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-05-11T03:59:14.108742095Z"
+    description: V Rising Helm chart for Kubernetes
+    digest: 99b30264385de8bec39e3da251878cc7675947a2376acb737840739c6143fbf4
+    home: https://github.com/caleb-devops/helm-charts
+    name: vrising
+    sources:
+    - https://github.com/caleb-devops/helm-charts
+    - https://github.com/TrueOsiris/docker-vrising
+    urls:
+    - https://github.com/caleb-devops/helm-charts/releases/download/vrising-0.1.0/vrising-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-05-11T03:59:14.108756221Z"

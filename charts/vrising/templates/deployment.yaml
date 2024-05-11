@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "vrising.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "vrising.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "vrising.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "vrising.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: vrising
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: SERVERNAME
+              value: {{ .Values.serverHostSettings.Name }}
+            - name: WORLDNAME
+              value: {{ .Values.serverHostSettings.SaveName }}
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          ports:
+            - name: game
+              containerPort: {{ .Values.serverHostSettings.Port }}
+              protocol: UDP
+            - name: query
+              containerPort: {{ .Values.serverHostSettings.QueryPort }}
+              protocol: UDP
+            - name: rcon
+              containerPort: {{ .Values.serverHostSettings.Rcon.Port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: vrising
+              mountPath: /mnt/vrising/server
+              subPath: server
+            - name: vrising
+              mountPath: /mnt/vrising/persistentdata
+              subPath: persistentdata
+            - name: config-volume
+              mountPath: /mnt/vrising/persistentdata/Settings/ServerHostSettings.json
+              subPath: ServerHostSettings.json
+            - name: config-volume
+              mountPath: /mnt/vrising/persistentdata/Settings/ServerGameSettings.json
+              subPath: ServerGameSettings.json
+            - name: config-volume
+              mountPath: /mnt/vrising/persistentdata/Settings/adminlist.txt
+              subPath: adminlist.txt
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: vrising
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ default (include "vrising.fullname" .) .Values.persistence.existingClaim }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
+        - name: config-volume
+          configMap:
+            name: {{ include "vrising.fullname" . }}

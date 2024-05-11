@@ -1,0 +1,308 @@
+image:
+  repository: trueosiris/vrising
+  pullPolicy: Always
+  tag: latest
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: LoadBalancer
+  ## Example annotations for kube-vip or MetalLB to assign a specific IP to the LoadBalancer
+  annotations: {}
+    # kube-vip.io/loadbalancerIPs: 192.168.1.100
+    # metallb.universe.tf/loadBalancerIPs: 192.168.1.100
+  gamePort: 9876
+  # gameNodePort: ""
+  queryPort: 9877
+  # queryNodePort: ""
+  rconPort: 25575
+  # rconNodePort: ""
+
+resources:
+  # limits:
+  #   cpu: 4
+  #   memory: 32Gi
+  requests:
+    cpu: 2
+    memory: 12Gi
+
+## Enable persistence using Persistent Volume Claims
+## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+##
+persistence:
+  enabled: true
+
+  ## A manually managed Persistent Volume and Claim
+  ## Requires persistence.enabled: true
+  ## If defined, PVC must be created manually before volume will be bound
+  existingClaim: ""
+
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  ## Storage class of PV to bind. By default it looks for standard storage class.
+  ## If the PV uses a different storage class, specify that here.
+  # storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 20Gi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+## Environment variables to add to the deployment
+env:
+  TZ: UTC
+
+## V Rising server configuration
+## ref: https://github.com/StunlockStudios/vrising-dedicated-server-instructions/blob/master/1.0.x/INSTRUCTIONS.md
+##
+serverHostSettings:
+  Name: V Rising Server
+  Description: ''
+  Port: 9876
+  QueryPort: 9877
+  MaxConnectedUsers: 40
+  MaxConnectedAdmins: 4
+  ServerFps: 30
+  SaveName: world1
+  Password: ''
+  Secure: true
+  ListOnSteam: false
+  ListOnEOS: false
+  AutoSaveCount: 20
+  AutoSaveInterval: 120
+  CompressSaveFiles: true
+  GameSettingsPreset: ''
+  GameDifficultyPreset: ''
+  AdminOnlyDebugEvents: true
+  DisableDebugEvents: false
+  API:
+    Enabled: false
+  Rcon:
+    Enabled: false
+    Port: 25575
+    Password: ''
+
+## Game settings
+## ref: https://cdn.stunlock.com/blog/2022/05/25083113/Game-Server-Settings.pdf
+## 
+serverGameSettings:
+  GameDifficulty: Normal
+  GameModeType: PvP
+  CastleDamageMode: Never
+  SiegeWeaponHealth: Normal
+  PlayerDamageMode: Always
+  CastleHeartDamageMode: CanBeDestroyedByPlayers
+  PvPProtectionMode: Medium
+  DeathContainerPermission: Anyone
+  RelicSpawnType: Unique
+  CanLootEnemyContainers: true
+  BloodBoundEquipment: true
+  TeleportBoundItems: true
+  BatBoundItems: false
+  AllowGlobalChat: true
+  AllWaypointsUnlocked: false
+  FreeCastleRaid: false
+  FreeCastleClaim: false
+  FreeCastleDestroy: false
+  InactivityKillEnabled: true
+  InactivityKillTimeMin: 3600
+  InactivityKillTimeMax: 604800
+  InactivityKillSafeTimeAddition: 172800
+  InactivityKillTimerMaxItemLevel: 84
+  StartingProgressionLevel: 0
+  DisableDisconnectedDeadEnabled: true
+  DisableDisconnectedDeadTimer: 60
+  DisconnectedSunImmunityTime: 300
+  InventoryStacksModifier: 1
+  DropTableModifier_General: 1
+  DropTableModifier_Missions: 1
+  MaterialYieldModifier_Global: 1
+  BloodEssenceYieldModifier: 1
+  JournalVBloodSourceUnitMaxDistance: 25
+  PvPVampireRespawnModifier: 1
+  CastleMinimumDistanceInFloors: 2
+  ClanSize: 4
+  BloodDrainModifier: 1
+  DurabilityDrainModifier: 1
+  GarlicAreaStrengthModifier: 1
+  HolyAreaStrengthModifier: 1
+  SilverStrengthModifier: 1
+  SunDamageModifier: 1
+  CastleDecayRateModifier: 1
+  CastleBloodEssenceDrainModifier: 1
+  CastleSiegeTimer: 420
+  CastleUnderAttackTimer: 60
+  CastleRaidTimer: 600
+  CastleRaidProtectionTime: 1800
+  CastleExposedFreeClaimTimer: 300
+  CastleRelocationCooldown: 10800
+  CastleRelocationEnabled: true
+  AnnounceSiegeWeaponSpawn: true
+  ShowSiegeWeaponMapIcon: false
+  BuildCostModifier: 1
+  RecipeCostModifier: 1
+  CraftRateModifier: 1
+  ResearchCostModifier: 1
+  RefinementCostModifier: 1
+  RefinementRateModifier: 1
+  ResearchTimeModifier: 1
+  DismantleResourceModifier: 1
+  ServantConvertRateModifier: 1
+  RepairCostModifier: 1
+  Death_DurabilityFactorLoss: 0.125
+  Death_DurabilityLossFactorAsResources: 1
+  StarterEquipmentId: 0
+  StarterResourcesId: 0
+  VBloodUnitSettings: []
+  UnlockedAchievements: []
+  UnlockedResearchs: []
+  GameTimeModifiers:
+    DayDurationInSeconds: 1080
+    DayStartHour: 9
+    DayStartMinute: 0
+    DayEndHour: 17
+    DayEndMinute: 0
+    BloodMoonFrequency_Min: 10
+    BloodMoonFrequency_Max: 18
+    BloodMoonBuff: 0.2
+  VampireStatModifiers:
+    MaxHealthModifier: 1
+    PhysicalPowerModifier: 1
+    SpellPowerModifier: 1
+    ResourcePowerModifier: 1
+    SiegePowerModifier: 1
+    DamageReceivedModifier: 1
+    ReviveCancelDelay: 5
+  UnitStatModifiers_Global:
+    MaxHealthModifier: 1
+    PowerModifier: 1
+    LevelIncrease: 0
+  UnitStatModifiers_VBlood:
+    MaxHealthModifier: 1
+    PowerModifier: 1
+    LevelIncrease: 0
+  EquipmentStatModifiers_Global:
+    MaxHealthModifier: 1
+    ResourceYieldModifier: 1
+    PhysicalPowerModifier: 1
+    SpellPowerModifier: 1
+    SiegePowerModifier: 1
+    MovementSpeedModifier: 1
+  CastleStatModifiers_Global:
+    TickPeriod: 5
+    SafetyBoxLimit: 1
+    EyeStructuresLimit: 1
+    TombLimit: 12
+    VerminNestLimit: 4
+    PrisonCellLimit: 16
+    HeartLimits:
+      Level1:
+        FloorLimit: 50
+        ServantLimit: 4
+        BuildLimits: 2
+        HeightLimit: 3
+      Level2:
+        FloorLimit: 140
+        ServantLimit: 5
+        BuildLimits: 2
+        HeightLimit: 3
+      Level3:
+        FloorLimit: 240
+        ServantLimit: 6
+        BuildLimits: 2
+        HeightLimit: 3
+      Level4:
+        FloorLimit: 360
+        ServantLimit: 7
+        BuildLimits: 2
+        HeightLimit: 3
+      Level5:
+        FloorLimit: 550
+        ServantLimit: 8
+        BuildLimits: 2
+        HeightLimit: 3
+    CastleLimit: 2
+    NetherGateLimit: 1
+    ThroneOfDarknessLimit: 1
+  PlayerInteractionSettings:
+    TimeZone: Local
+    VSPlayerWeekdayTime:
+      StartHour: 20
+      StartMinute: 0
+      EndHour: 22
+      EndMinute: 0
+    VSPlayerWeekendTime:
+      StartHour: 20
+      StartMinute: 0
+      EndHour: 22
+      EndMinute: 0
+    VSCastleWeekdayTime:
+      StartHour: 20
+      StartMinute: 0
+      EndHour: 22
+      EndMinute: 0
+    VSCastleWeekendTime:
+      StartHour: 20
+      StartMinute: 0
+      EndHour: 22
+      EndMinute: 0
+  TraderModifiers:
+    StockModifier: 1
+    PriceModifier: 1
+    RestockTimerModifier: 1
+  WarEventGameSettings:
+    Interval: 1
+    MajorDuration: 1
+    MinorDuration: 1
+    WeekdayTime:
+      StartHour: 0
+      StartMinute: 0
+      EndHour: 23
+      EndMinute: 59
+    WeekendTime:
+      StartHour: 0
+      StartMinute: 0
+      EndHour: 23
+      EndMinute: 59
+    ScalingPlayers1:
+      PointsModifier: 1
+      DropModifier: 1
+    ScalingPlayers2:
+      PointsModifier: 0.5
+      DropModifier: 0.5
+    ScalingPlayers3:
+      PointsModifier: 0.25
+      DropModifier: 0.25
+    ScalingPlayers4:
+      PointsModifier: 0.25
+      DropModifier: 0.25
+
+## List of SteamIDs with admin access to this server
+## https://help.steampowered.com/en/faqs/view/2816-BE67-5B69-0FEC
+##
+adminList:
+  # - "76561197#########"
+  # - "76561198#########"

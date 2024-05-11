@@ -1,0 +1,38 @@
+{{- $setNodePorts := (or (eq .Values.service.type "NodePort") (eq .Values.service.type "LoadBalancer")) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "vrising.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "vrising.labels" . | nindent 4 }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.gamePort }}
+      targetPort: game
+      protocol: UDP
+      name: game
+      {{- if (and $setNodePorts (not (empty .Values.service.gameNodePort))) }}
+      nodePort: {{ .Values.service.gameNodePort }}
+      {{- end }}
+    - port: {{ .Values.service.queryPort }}
+      targetPort: query
+      protocol: UDP
+      name: query
+      {{- if (and $setNodePorts (not (empty .Values.service.queryNodePort))) }}
+      nodePort: {{ .Values.service.queryNodePort }}
+      {{- end }}
+    - port: {{ .Values.service.rconPort }}
+      targetPort: rcon
+      protocol: TCP
+      name: rcon
+      {{- if (and $setNodePorts (not (empty .Values.service.rconNodePort))) }}
+      nodePort: {{ .Values.service.rconNodePort }}
+      {{- end }}
+  selector:
+    {{- include "vrising.selectorLabels" . | nindent 4 }}
